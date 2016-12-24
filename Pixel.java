@@ -1,12 +1,23 @@
 
 public class Pixel {
 
+
+	// this class represents an ARGB pixel
+	// and used for convenience
+	// BufferedImage class functions getRGB() and setRGB()
+	// work with the bit representation of color (some big number, e.g. -166666)
+	// So, this class converts freely from bit value to numbers from 0 to 255
+	// for each component
+
+
 	private int argb[];   // 0 - alpha, 1 - red, 2 - green, 3 - blue
 	private int bit;	  // the bit form of the color
 
 	Pixel() {
 		argb = new int[4];
 	}
+
+
 
 	public Pixel(int alpha, int red, int green, int blue) throws ColorException {
 		if (alpha > 255 || red > 255 || green > 255 || blue > 255) throw new ColorException();
@@ -17,6 +28,9 @@ public class Pixel {
 		argb[3] = blue;
 		bit = ARGBToBit(argb);
 	}
+
+	// constructor based on bit
+
 
 	public Pixel(int bit) throws ColorException {
 		argb = new int[4];
@@ -36,7 +50,7 @@ public class Pixel {
 
 
 
-	public static int[] bitToARGB(int bit) {
+	private static int[] bitToARGB(int bit) {
 		int[] a = new int[4];
 		a[0] = (int) ((bit >>24) & 0xff);
 		a[1] = (int) ((bit >>16) & 0xff);
@@ -45,7 +59,7 @@ public class Pixel {
 		return a;
 	}
 
-	public static int ARGBToBit(int[] a) {
+	private static int ARGBToBit(int[] a) {
 		int bit = (a[0]<<24) |  (a[1]<<16) | (a[2]<<8) | a[3];
 		return bit;
 	}
@@ -149,7 +163,10 @@ public class Pixel {
 		return bit;
 	}
 
-	// other things
+
+
+
+	// middle colors?
 
 	public static Pixel average (Pixel a, Pixel b) throws ColorException {
 		int bit = (a.bit + b.bit)/2;
@@ -164,6 +181,8 @@ public class Pixel {
 	}
 
 
+
+	// basiccccccccccccc
 
 	public Pixel clone() {
 		Pixel a = null;

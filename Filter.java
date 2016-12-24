@@ -3,6 +3,8 @@ import java.awt.image.BufferedImage;
 public class Filter {
 
 
+	// here you make cool filters @#$%^&*
+
 
 
 	public static void greyscale(BufferedImage b) throws ColorException {
