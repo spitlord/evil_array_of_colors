@@ -5,8 +5,6 @@ public class Filter {
 
 	// here you make cool filters @#$%^&*
 
-
-
 	public static void greyscale(BufferedImage b) throws ColorException {
 
 		for (int ii = 0; ii < b.getWidth(); ii++) {
@@ -14,6 +12,21 @@ public class Filter {
 				Pixel x = new Pixel(b.getRGB(ii, jj));
 				int grey = (x.getB()+x.getG()+x.getR())/3;
 				x.setARGB(255, grey, grey, grey);
+				b.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
+
+
+	public static void contrast(BufferedImage b,double factor) throws ColorException {
+
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel x = new Pixel(b.getRGB(ii, jj));
+				x.setARGB(255,
+					Math.min((int)(x.getR()*factor),255),
+					Math.min((int)(x.getG()*factor),255),
+					Math.min((int)(x.getB()*factor),255));
 				b.setRGB(ii, jj, x.getBit());
 			}
 		}
@@ -179,6 +192,17 @@ public class Filter {
 		}
 	}
 
+	public static void mod(BufferedImage b, int modularity) throws ColorException {
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel x = new Pixel(b.getRGB(ii, jj));
+				x.setR((int)(x.getR()*modularity)%256);
+				x.setG((int)(x.getG()*modularity)%256);
+				x.setB((int)(x.getB()*modularity)%256);
+				b.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
 
 
 	public static void glitch(BufferedImage b, int modularity) throws ColorException {
@@ -269,6 +293,135 @@ public class Filter {
 		}
 	}
 
+	public static void cascade(BufferedImage b) throws ColorException {
+		int maximum = 0;
+		int maxima[][] = new int[b.getWidth()][3];
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel px = new Pixel(b.getRGB(ii, jj));
+				maxima[ii][0] += px.getR();
+				maxima[ii][1] += px.getG();
+				maxima[ii][2] += px.getB();
+			}
+			for(int channel=0; channel<3; channel++){
+				if(maximum < maxima[ii][channel]){
+					maximum = maxima[ii][channel];
+				}
+			}
+		}
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			int cumsum[] = new int[3];
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel px = new Pixel(b.getRGB(ii, jj));
+				cumsum[0] += px.getR();
+				cumsum[1] += px.getG();
+				cumsum[2] += px.getB();
+				px.setR(255*cumsum[0]/maximum);
+				px.setG(255*cumsum[1]/maximum);
+				px.setB(255*cumsum[2]/maximum);
+				b.setRGB(ii,jj,px.getBit());
+			}
+		}
+	}
+
+	public static void absDel(BufferedImage b) throws ColorException {
+		double[][][] nuvoImage = new double[b.getWidth()][b.getHeight()][3];
+		double max = 0;
+		for (int ii = 1; ii < b.getWidth(); ii++) {
+			for (int jj = 1; jj < b.getHeight(); jj++) {
+				Pixel px = new Pixel(b.getRGB(ii, jj));
+				Pixel px_x = new Pixel(b.getRGB(ii-1, jj));
+				Pixel px_y = new Pixel(b.getRGB(ii, jj-1));
+				nuvoImage[ii][jj][0] = Math.sqrt(
+					Math.pow((int)(px.getR()-px_x.getR()),2)+
+					Math.pow((int)(px.getR()-px_y.getR()),2));
+				nuvoImage[ii][jj][1] = Math.sqrt(
+					Math.pow((int)(px.getG()-px_x.getG()),2)+
+					Math.pow((int)(px.getG()-px_y.getG()),2));
+				nuvoImage[ii][jj][2] = Math.sqrt(
+					Math.pow((int)(px.getB()-px_x.getB()),2)+
+					Math.pow((int)(px.getB()-px_y.getB()),2));
+				max =
+					Math.max( max,
+					Math.max( nuvoImage[ii][jj][0],
+					Math.max( nuvoImage[ii][jj][1],
+					          nuvoImage[ii][jj][2]
+				)));
+			}
+		}
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				b.setRGB(ii,jj,new Pixel(255,
+					(int)(nuvoImage[ii][jj][0]*255/max),
+					(int)(nuvoImage[ii][jj][1]*255/max),
+					(int)(nuvoImage[ii][jj][2]*255/max)).getBit());
+
+			}
+		}
+	}
+
+	public static void absDelBalanced(BufferedImage b) throws ColorException {
+		double[][][] nuvoImage = new double[b.getWidth()][b.getHeight()][3];
+		double max = 0;
+		for (int ii = 1; ii < b.getWidth(); ii++) {
+			for (int jj = 1; jj < b.getHeight(); jj++) {
+				Pixel px = new Pixel(b.getRGB(ii, jj));
+				Pixel px_x = new Pixel(b.getRGB(ii-1, jj));
+				Pixel px_y = new Pixel(b.getRGB(ii, jj-1));
+				nuvoImage[ii][jj][0] = Math.sqrt(
+					Math.pow((int)(px.getR()-px_x.getR()),2)+
+					Math.pow((int)(px.getR()-px_y.getR()),2));
+				nuvoImage[ii][jj][1] = Math.sqrt(
+					Math.pow((int)(px.getG()-px_x.getG()),2)+
+					Math.pow((int)(px.getG()-px_y.getG()),2));
+				nuvoImage[ii][jj][2] = Math.sqrt(
+					Math.pow((int)(px.getB()-px_x.getB()),2)+
+					Math.pow((int)(px.getB()-px_y.getB()),2));
+				nuvoImage[ii][jj][0] *= px.getR();
+				nuvoImage[ii][jj][1] *= px.getG();
+				nuvoImage[ii][jj][2] *= px.getB();
+				max =
+					Math.max( max,
+					Math.max( nuvoImage[ii][jj][0],
+					Math.max( nuvoImage[ii][jj][1],
+					          nuvoImage[ii][jj][2]
+				)));
+			}
+		}
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				b.setRGB(ii,jj,new Pixel(255,
+					(int)(nuvoImage[ii][jj][0]*255/max),
+					(int)(nuvoImage[ii][jj][1]*255/max),
+					(int)(nuvoImage[ii][jj][2]*255/max)).getBit());
+
+			}
+		}
+	}
+
+	public static void normalize(BufferedImage b) throws ColorException {
+		int maximum = 0;
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel px = new Pixel(b.getRGB(ii, jj));
+				maximum =
+					Math.max( maximum, 
+					Math.max( px.getR(),
+					Math.max( px.getG(),
+					          px.getB()
+				)));
+			}
+		}
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel px = new Pixel(b.getRGB(ii, jj));
+				px.setR(px.getR()/maximum);
+				px.setG(px.getG()/maximum);
+				px.setB(px.getB()/maximum);
+				b.setRGB(ii,jj,px.getBit());
+			}
+		}
 
 
+	}
 }
