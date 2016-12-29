@@ -192,7 +192,7 @@ public class Filter {
 		}
 	}
 
-	public static void mod(BufferedImage b, int modularity) throws ColorException {
+	public static void mod(BufferedImage b, double modularity) throws ColorException {
 		for (int ii = 0; ii < b.getWidth(); ii++) {
 			for (int jj = 0; jj < b.getHeight(); jj++) {
 				Pixel x = new Pixel(b.getRGB(ii, jj));
