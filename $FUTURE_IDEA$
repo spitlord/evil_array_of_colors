@@ -1,0 +1,8 @@
+-I'd like to turn the program into some sort of A.I. that decides whether image is
+  appealing or not (but first I need to study a lot of things obv). Though, I'm thinking
+  that it could calculate some number that considers relation and differences between all
+  pixels and also relative rectangulars (partition the image into grid and compare sectors).
+  Something like analysis of variation in statistics: considering variation between groups
+  and variation within groups...
+
+  
