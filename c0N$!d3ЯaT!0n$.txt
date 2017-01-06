@@ -9,4 +9,6 @@ Few things to consider:
 -Creating classes like Filter (named FilterA, FilterB, e.g) for better organization (?)
 
       
-Thoughts?
+Thoughts? 
+
+Add anything that you mind (important)/(interesting to look into)/(improvement ideas)
