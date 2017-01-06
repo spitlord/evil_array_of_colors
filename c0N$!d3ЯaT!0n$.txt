@@ -11,6 +11,7 @@ Few things to consider:
   We could add this as a boolean in pixel class, or whatevs
 -Creating classes like Filter (named FilterA, FilterB, e.g) for better organization (?)
   Also, creating class containing basic filter (most recognuzable, like contrast, inversion?)
+ 
 
 
       
