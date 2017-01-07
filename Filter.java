@@ -547,6 +547,39 @@ public class Filter {
 	}
 	
 	
+	public static void minmaxno(BufferedImage b, int change) throws ColorException {
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel a = new Pixel(b.getRGB(ii, jj));
+				try {
+					if (a.getB() == a.minRGB()) {
+						a.setB((Math.abs(a.getB() - change))%256);
+					}
+					else if (a.getB() == a.maxRGB()) {
+						a.setB((a.getB() + change)%256);
+					}
+
+					if (a.getG() == a.minRGB()) {
+						a.setG((Math.abs(a.getG() - change))%256);
+					}
+					else if (a.getG() == a.maxRGB()) {
+						a.setG((a.getG() + change)%256);
+					}
+
+					if (a.getR() == a.minRGB()) {
+						a.setR((Math.abs(a.getR() - change))%256);
+					}
+					else if (a.getR() == a.maxRGB()) {
+						a.setR((a.getR() + change)%256);
+					}
+					b.setRGB(ii, jj, a.getBit());
+				} catch(ColorException ce) {}
+			}
+		}
+	}
+
+	
+	
 	
 	
 	
