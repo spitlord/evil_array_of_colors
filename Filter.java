@@ -424,4 +424,130 @@ public class Filter {
 
 
 	}
+	
+	
+	
+	public static void addNoize (BufferedImage c, int amount) throws ColorException {
+		amount =  Math.abs(amount);
+		int a = 0;
+
+		for (int ii = 0; ii < c.getWidth(); ii++) {
+			for (int jj = 0; jj < c.getHeight(); jj++) {
+				Pixel x = new Pixel(c.getRGB(ii, jj));
+
+					a = (int)(Math.random()*2);
+					if (a==0) amount = -amount;
+					x.setR(Math.abs((x.getR()+amount))%256);
+
+					a = (int)(Math.random()*2);
+					if (a==0) amount = -amount;
+					x.setG(Math.abs((x.getG()+amount))%256);
+
+					a = (int)(Math.random()*2);
+					if (a==0) amount = -amount;
+					x.setB(Math.abs((x.getB()+amount))%256);
+
+					c.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
+	
+	
+		public static void greyToBlack(BufferedImage b, int treshhold, int change) throws ColorException {
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel x = new Pixel(b.getRGB(ii, jj));
+
+				if (x.sortaGrey(treshhold)) {
+					x.setB(((x.getB() - change) >= 0)? (x.getB() - change) : 0);
+					x.setR(((x.getR() - change) >= 0)? (x.getR() - change) : 0);
+					x.setG(((x.getG() - change) >= 0)? (x.getG() - change) : 0);
+				}
+
+					b.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
+
+	public static void darker(BufferedImage b, int change) throws ColorException {
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel x = new Pixel(b.getRGB(ii, jj));
+
+				x.setB(((x.getB() - change) >= 0)? (x.getB() - change) : 0);
+				x.setR(((x.getR() - change) >= 0)? (x.getR() - change) : 0);
+				x.setG(((x.getG() - change) >= 0)? (x.getG() - change) : 0);
+
+				b.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
+
+	public static void greyToWhite(BufferedImage b, int treshhold, int change) throws ColorException {
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel x = new Pixel(b.getRGB(ii, jj));
+				if (x.sortaGrey(treshhold)) {
+					x.setB(((x.getB() + change) <= 255)? (x.getB() + change) : 255);
+					x.setR(((x.getR() + change) <= 255)? (x.getR() + change) : 255);
+					x.setG(((x.getG() + change) <= 255)? (x.getG() + change) : 255);
+				}
+
+				b.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
+
+	public static void lighter(BufferedImage b, int change) throws ColorException {
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel x = new Pixel(b.getRGB(ii, jj));
+				x.setB(((x.getB() + change) <= 255)? (x.getB() + change) : 255);
+				x.setR(((x.getR() + change) <= 255)? (x.getR() + change) : 255);
+				x.setG(((x.getG() + change) <= 255)? (x.getG() + change) : 255);
+
+					b.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
+	
+		public static void timeLapse(BufferedImage b, int treshhold, int change) throws ColorException {
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel a = new Pixel(b.getRGB(ii, jj));
+				try {
+					if (a.sortaGrey(treshhold)) {
+						if (a.getB() == a.minRGB()) {
+							a.setB((Math.abs(a.getB() - change))%256);
+						}
+						else if (a.getB() == a.maxRGB()) {
+							a.setB((a.getB() + change)%256);
+						}
+
+						if (a.getG() == a.minRGB()) {
+							a.setG((Math.abs(a.getG() - change))%256);
+						}
+						else if (a.getG() == a.maxRGB()) {
+							a.setG((a.getG() + change)%256);
+						}
+
+						if (a.getR() == a.minRGB()) {
+							a.setR((Math.abs(a.getR() - change))%256);
+						}
+						else if (a.getR() == a.maxRGB()) {
+							a.setR((a.getR() + change)%256);
+						}
+
+					}
+
+					b.setRGB(ii, jj, a.getBit());
+				} catch(ColorException ce) {}
+			}
+		}
+	}
+	
+	
+	
+	
+	
 }
