@@ -62,8 +62,10 @@ public class Editor extends Application {
 
 			// directory where you output a file
 			// math random is here to make up a name (collision is too unlikely)
+			// added time variable, this way it's easy to sort them by which
+			// was created first
 
-			File hella = new File("/Users/XDXD/Desktop/genFil/"+ "evilArrayOfColor" + (int) (9000000*Math.random()) + ".jpg");
+			File hella = new File("/Users/XDXD/Desktop/genFil/"+ "evilArrayOfColor" + time + "hold" + (int) (9000000*Math.random()) + ".jpg");
 
 			ImageIO.write(im, "jpg", hella );
 			FileInputStream resulting = new FileInputStream(hella);
