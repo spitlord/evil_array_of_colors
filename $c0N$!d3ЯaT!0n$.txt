@@ -8,7 +8,8 @@ Few things to consider:
        also get rid of color exception.
        Relative stability. 
     2) For < 0, use absolute value, while for over 255 use (mod 256).
-        I like this way in a sense that it gives some variability (for example in AddNoize filter)
+        I like this way in a sense that it gives some variability (for example in AddNoize filter). But i guess user could  
+        modify code to possible values before it performs the 1 method.
   Thoughts? 
   We could add this as a boolean in pixel class, or whatevs
 -Creating classes like Filter (named FilterA, FilterB, e.g) for better organization (?)
