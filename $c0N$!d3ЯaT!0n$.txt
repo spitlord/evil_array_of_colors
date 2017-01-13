@@ -17,7 +17,7 @@ Few things to consider:
 -Adding some sort of interface that allows for creating masks: that is, strength of a filter on each pixel
    is defined by some function.
 -I'm planning to add HSL very soon in the pixel class, see if I made mistakes somewhere. For lightness and saturation, would   
-   you prefer percentages, decimals?
+   you prefer percentages, decimals, integers(0-255 like rgb)?
  
 
 
