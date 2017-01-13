@@ -1,6 +1,6 @@
 Few things to consider:
 -We should probably rename variable b (BufferedImage) in Filter class to img. 
-  That being more explicit and also rgb has letter b
+   That being more explicit and also rgb has letter b
 -The pixel class throws ColorException if a value of argb is less than 0 or more than 255.
   There are two modes of dealing with such values that I see:
     1) If value ends up being over 255, just set it to 255, if value is < 0, just set it to 0.
@@ -13,7 +13,9 @@ Few things to consider:
   Thoughts? 
   We could add this as a boolean in pixel class, or whatevs
 -Creating classes like Filter (named FilterA, FilterB, e.g) for better organization (?)
-  Also, creating class containing basic filter (most recognuzable, like contrast, inversion?)
+   Also, creating class containing basic filter (most recognuzable, like contrast, inversion?)
+-Adding some sort of interface that allows for creating masks: that is, strength of a filter on each pixel
+   is defined by some function.
  
 
 
