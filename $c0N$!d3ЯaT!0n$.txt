@@ -16,7 +16,8 @@ Few things to consider:
    Also, creating class containing basic filter (most recognuzable, like contrast, inversion?)
 -Adding some sort of interface that allows for creating masks: that is, strength of a filter on each pixel
    is defined by some function.
--I'm planning to add HSL very soon in the pixel class, see if I made mistakes somewhere
+-I'm planning to add HSL very soon in the pixel class, see if I made mistakes somewhere. For lightness and saturation, would   
+   you prefer percentages, decimals?
  
 
 
