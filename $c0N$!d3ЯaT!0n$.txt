@@ -3,8 +3,10 @@ Few things to consider:
   That being more explicit and also rgb has letter b
 -The pixel class throws ColorException if a value of argb is less than 0 or more than 255.
   There are two modes of dealing with such values that I see:
-    1) If value ends up being over 255, just set it to 255, if value is < 0, just set it to 0
-       Relative stability.
+    1) If value ends up being over 255, just set it to 255, if value is < 0, just set it to 0.
+       That would be done within pixel class, so one never would have to worry about it. Then,
+       also get rid of color exception.
+       Relative stability. 
     2) For < 0, use absolute value, while for over 255 use (mod 256).
         I like this way in a sense that it gives some variability (for example in AddNoize filter)
   Thoughts? 
