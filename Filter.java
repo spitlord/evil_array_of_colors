@@ -17,7 +17,8 @@ public class Filter {
 		}
 	}
 	
-		public static void colorShift (BufferedImage b, double degree) {
+	
+	public static void colorShift (BufferedImage b, double degree) {
 		
 		for (int ii = 0; ii < b.getWidth(); ii++) {
 			for (int jj = 0; jj < b.getHeight(); jj++) {
