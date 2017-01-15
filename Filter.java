@@ -28,6 +28,18 @@ public class Filter {
 			}
 		}
 	}
+	
+	public static void saturation (BufferedImage b, double coef) throws ColorException {
+
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel x = new Pixel(b.getRGB(ii, jj));
+				x.setS((x.getS()+coef));
+
+				b.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
 
 
 	public static void contrast(BufferedImage b,double factor) throws ColorException {
