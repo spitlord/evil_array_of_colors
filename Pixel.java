@@ -172,20 +172,27 @@ public class Pixel {
 
 
 	public void setH (double hue) {
-		ahsl[1] = hue;
+		if (hue > 359) hue = 359;
+		else if (hue < 0) hue = 0;
+		else ahsl[1] = hue;
 		argb = AHSLToARGB(ahsl);
 		bit = ARGBToBit(argb);
 
 	}
 
 	public void setS (double saturation) {
-		ahsl[2] = saturation;
+
+		if (saturation > 1) ahsl[2] = 1;
+		else if (saturation < 0) ahsl[2] = 0;
+		else ahsl[2] = saturation;
 		argb = AHSLToARGB(ahsl);
 		bit = ARGBToBit(argb);
 	}
 
 	public void setL (double lightness) {
-		ahsl[3] = lightness;
+		if (lightness > 1) ahsl[3] = 1;
+		else if (lightness < 0) ahsl[3] = 0;
+		else ahsl[3] = lightness;
 		argb = AHSLToARGB(ahsl);
 		bit = ARGBToBit(argb);
 	}
@@ -353,7 +360,4 @@ public class Pixel {
 				+ "  [saturation: " + ahsl[2] + "]"
 				+ "  [lightness: " + ahsl[3]+"]";
 	}
-
-
-
 }
