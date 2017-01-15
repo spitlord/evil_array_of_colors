@@ -16,6 +16,17 @@ public class Filter {
 			}
 		}
 	}
+	
+		public static void colorShift (BufferedImage b, double degree) {
+		
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel x = new Pixel(b.getRGB(ii, jj));
+				x.setH((x.getH() + degree)%360);
+				b.setRGB(ii, jj, x.getBit());
+			}
+		}
+	}
 
 
 	public static void contrast(BufferedImage b,double factor) throws ColorException {
