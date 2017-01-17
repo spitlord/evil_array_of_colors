@@ -1,6 +1,7 @@
 Few things to consider:
 -We should probably rename variable b (BufferedImage) in Filter class to img. 
    That being more explicit and also rgb has letter b
+    i agree.
 -The pixel class throws ColorException if a value of argb is less than 0 or more than 255.
   There are two modes of dealing with such values that I see:
     1) If value ends up being over 255, just set it to 255, if value is < 0, just set it to 0.
@@ -11,15 +12,25 @@ Few things to consider:
         I like this way in a sense that it gives some variability (for example in AddNoize filter). But i guess user could  
         modify code to possible values before it performs the 1 method.
   Thoughts? 
+    1 is good i think. that way, you can do things like contrast and brightness and it'll just stop itself. it seems the least arbitrary.
   We could add this as a boolean in pixel class, or whatevs
 -Creating classes like Filter (named FilterA, FilterB, e.g) for better organization (?)
    Also, creating class containing basic filter (most recognuzable, like contrast, inversion?)
+   We could group filters that are basic together and filters that are related some other way into different classes.
 -Adding some sort of interface that allows for creating masks: that is, strength of a filter on each pixel
    is defined by some function.
+    sounds like it could be interesting. 
+    you'd need to deal with filters whose value depends on the pixels around it
 -I'm planning to add HSL very soon in the pixel class, see if I made mistakes somewhere. For lightness and saturation, would   
    you prefer percentages, decimals, integers(0-255 like rgb)?
- 
-
+    Storing both RGB and HSL is efficient if you are going to be getting both of the values a lot more than setting them.
+    So this is probably good.
+    When you convert between HSL and RGB you lose information because of rounding.
+    Allowing only 256 values causes rounding errors to be proportionally large,
+    while not saving memory or time cause you're using integers anyway.
+    -I suggest using either the full range of integers or using floats.
+-I was thinking of having it where you could add images of the same size,
+   You could filter an image and add that onto the original.  
 
       
 Add anything that you mind (important)/(interesting to look into)/(improvement ideas)/thoughts/etc..
