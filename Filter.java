@@ -295,11 +295,9 @@ public class Filter {
 			for (int jj = 0; jj < b.getHeight()-1; jj++) {
 				Pixel x = new Pixel(b.getRGB(ii, jj));
 
-				try {
-					if (x.getB() < threshhold ) x.setB(((int)(255-x.getB()*mildness))%256);
-					if (x.getR() < threshhold ) x.setR(((int)(255-x.getR()*mildness))%256);
-					if (x.getG() < threshhold ) x.setG(((int)(255-x.getG()*mildness))%256);
-				} catch (ColorException c) { }
+				if (x.getB() < threshhold ) x.setB(((int)(255-x.getB()*mildness))%256);
+				if (x.getR() < threshhold ) x.setR(((int)(255-x.getR()*mildness))%256);
+				if (x.getG() < threshhold ) x.setG(((int)(255-x.getG()*mildness))%256);
 
 				b.setRGB(ii, jj, x.getBit());
 			}
@@ -539,43 +537,7 @@ public class Filter {
 		for (int ii = 0; ii < b.getWidth(); ii++) {
 			for (int jj = 0; jj < b.getHeight(); jj++) {
 				Pixel a = new Pixel(b.getRGB(ii, jj));
-				try {
-					if (a.sortaGrey(treshhold)) {
-						if (a.getB() == a.minRGB()) {
-							a.setB((Math.abs(a.getB() - change))%256);
-						}
-						else if (a.getB() == a.maxRGB()) {
-							a.setB((a.getB() + change)%256);
-						}
-
-						if (a.getG() == a.minRGB()) {
-							a.setG((Math.abs(a.getG() - change))%256);
-						}
-						else if (a.getG() == a.maxRGB()) {
-							a.setG((a.getG() + change)%256);
-						}
-
-						if (a.getR() == a.minRGB()) {
-							a.setR((Math.abs(a.getR() - change))%256);
-						}
-						else if (a.getR() == a.maxRGB()) {
-							a.setR((a.getR() + change)%256);
-						}
-
-					}
-
-					b.setRGB(ii, jj, a.getBit());
-				} catch(ColorException ce) {}
-			}
-		}
-	}
-	
-	
-	public static void minmaxno(BufferedImage b, int change) throws ColorException {
-		for (int ii = 0; ii < b.getWidth(); ii++) {
-			for (int jj = 0; jj < b.getHeight(); jj++) {
-				Pixel a = new Pixel(b.getRGB(ii, jj));
-				try {
+				if (a.sortaGrey(treshhold)) {
 					if (a.getB() == a.minRGB()) {
 						a.setB((Math.abs(a.getB() - change))%256);
 					}
@@ -596,8 +558,40 @@ public class Filter {
 					else if (a.getR() == a.maxRGB()) {
 						a.setR((a.getR() + change)%256);
 					}
-					b.setRGB(ii, jj, a.getBit());
-				} catch(ColorException ce) {}
+
+				}
+
+				b.setRGB(ii, jj, a.getBit());
+			}
+		}
+	}
+	
+	
+	public static void minmaxno(BufferedImage b, int change) throws ColorException {
+		for (int ii = 0; ii < b.getWidth(); ii++) {
+			for (int jj = 0; jj < b.getHeight(); jj++) {
+				Pixel a = new Pixel(b.getRGB(ii, jj));
+				if (a.getB() == a.minRGB()) {
+					a.setB((Math.abs(a.getB() - change))%256);
+				}
+				else if (a.getB() == a.maxRGB()) {
+					a.setB((a.getB() + change)%256);
+				}
+
+				if (a.getG() == a.minRGB()) {
+					a.setG((Math.abs(a.getG() - change))%256);
+				}
+				else if (a.getG() == a.maxRGB()) {
+					a.setG((a.getG() + change)%256);
+				}
+
+				if (a.getR() == a.minRGB()) {
+					a.setR((Math.abs(a.getR() - change))%256);
+				}
+				else if (a.getR() == a.maxRGB()) {
+					a.setR((a.getR() + change)%256);
+				}
+				b.setRGB(ii, jj, a.getBit());
 			}
 		}
 	}
