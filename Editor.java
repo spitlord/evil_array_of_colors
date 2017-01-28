@@ -75,6 +75,10 @@ public class Editor extends Application {
 
 
 		//////////////////////// STATISTICS BLOCK /////////////////////////////////////////
+		
+		// one problem with HSL is that saturation of black is undefined(tho low dark things may be fully
+		//saturated), but us Humanz don't think of dark colors as very colourfull.
+		
 		BufferedImage im = new BufferedImage((int)image.getWidth(), (int)image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		im = ImageIO.read(initFile);
 		Statistics.histrogram(im);
