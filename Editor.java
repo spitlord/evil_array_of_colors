@@ -74,6 +74,12 @@ public class Editor extends Application {
 		}
 
 
+		//////////////////////// STATISTICS BLOCK /////////////////////////////////////////
+		BufferedImage im = new BufferedImage((int)image.getWidth(), (int)image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		im = ImageIO.read(initFile);
+		Statistics.histrogram(im);
+		
+		////////////////////////////////   ????????????????????????????
 
 
 
