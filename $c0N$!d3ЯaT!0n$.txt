@@ -1,3 +1,10 @@
+Unfortunatelly, some filters might have been deleted from the Git, because I tried changing some things.
+If you don't see some filter that you added, just re-add it to so some Filter class
+
+
+
+
+
 Few things to consider:
 -We should probably rename variable b (BufferedImage) in Filter class to img. 
    That being more explicit and also rgb has letter b
