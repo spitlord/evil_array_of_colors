@@ -1,3 +1,12 @@
+Currently, the class is being rewritten in such way that the image pixels are accessed as direct as possible!
+BufferedImage will be the class that opens images, while pixels will no longer be accessed with getRGB method. Instead, the buffered data will be sampled, based on type of color encoding. At the beginning only jpg will be supported
+
+
+
+
+
+
+
 Unfortunatelly, some filters might have been deleted from the Git, because I tried changing some things.
 If you don't see some filter that you added, just re-add it to so some Filter class
 
